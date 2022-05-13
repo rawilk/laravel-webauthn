@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Rawilk\Webauthn\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class WebauthnCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-webauthn';
 
     public $description = 'My command';
 

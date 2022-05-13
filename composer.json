@@ -1,17 +1,18 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "rawilk/laravel-webauthn",
+    "description": "Add webauthn functionality to Laravel",
     "keywords": [
-        ":vendor_name",
+        "rawilk",
         "laravel",
-        ":package_slug"
+        "webauthn"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/rawilk/laravel-webauthn",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Randall Wilk",
+            "email": "randall@randallwilk.dev",
+            "homepage": "https://randallwilk.dev",
             "role": "Developer"
         }
     ],
@@ -30,13 +31,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Rawilk\\Webauthn\\": "src",
+            "Rawilk\\Webauthn\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Rawilk\\Webauthn\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -45,15 +46,18 @@
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Rawilk\\Webauthn\\WebauthnServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\SkeletonFacade"
+                "Webauthn": "Rawilk\\Webauthn\\Facades\\Webauthn"
             }
         }
     },
