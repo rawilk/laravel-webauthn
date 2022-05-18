@@ -26,6 +26,7 @@ php artisan migrate
 ```
 
 You can publish the config file with:
+
 ```bash
 php artisan vendor:publish --tag="webauthn-config"
 ```
@@ -34,7 +35,7 @@ You can view the default configuration here: https://github.com/rawilk/laravel-w
 
 ## Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -52,8 +53,8 @@ Please review [my security policy](.github/SECURITY.md) on how to report securit
 
 ## Credits
 
-- [Randall Wilk](https://github.com/rawilk)
-- [All Contributors](../../contributors)
+-   [Randall Wilk](https://github.com/rawilk)
+-   [All Contributors](../../contributors)
 
 ## License
 
