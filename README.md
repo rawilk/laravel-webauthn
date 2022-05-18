@@ -8,8 +8,7 @@
 
 ![Social image](https://banners.beyondco.de/laravel-webauthn.png?theme=light&packageManager=composer+require&packageName=rawilk%2Flaravel-webauthn&pattern=randomShapes&style=style_1&description=Add+WebAuthn+functionality+to+Laravel.&md=1&showWatermark=0&fontSize=100px&images=key)
 
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Add the ability to add a hardware based two-factor authentication via a security key, fingerprint or biometric data.
 
 ## Installation
 
@@ -22,23 +21,16 @@ composer require rawilk/laravel-webauthn
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-webauthn-migrations"
+php artisan vendor:publish --tag="webauthn-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --tag="laravel-webauthn-config"
+php artisan vendor:publish --tag="webauthn-config"
 ```
 
 You can view the default configuration here: https://github.com/rawilk/laravel-webauthn/blob/main/config/laravel-webauthn.php
-
-## Usage
-
-``` php
-$laravel-webauthn = new Rawilk\Webauthn;
-echo $laravel-webauthn->echoPhrase('Hello, Rawilk!');
-```
 
 ## Testing
 
