@@ -26,7 +26,16 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        // include_once __DIR__ . '/../database/migrations/create_laravel-webauthn_table.php.stub';
-        // (new \CreatePackageTable())->up();
+        $testMigrations = [
+            'create_users_table.php',
+        ];
+
+        foreach ($testMigrations as $path) {
+            $migration = include __DIR__ . '/Support/database/migrations/' . $path;
+            $migration->up();
+        }
+
+        $migration = include __DIR__ . '/../database/migrations/create_webauthn_table.php.stub';
+        $migration->up();
     }
 }
