@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use function Pest\Laravel\actingAs;
 use Rawilk\Webauthn\Models\WebauthnKey;
 use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
-use function Pest\Laravel\actingAs;
 
 uses(DatabaseTransactions::class);
 

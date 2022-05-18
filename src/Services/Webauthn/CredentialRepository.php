@@ -26,7 +26,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
             $webauthnKey = $this->model($publicKeyCredentialId);
 
             return $webauthnKey->public_key_credential_source;
-        } catch (ModelNotFoundException) {}
+        } catch (ModelNotFoundException) {
+        }
 
         return null;
     }

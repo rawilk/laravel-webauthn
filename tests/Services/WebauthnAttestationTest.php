@@ -4,6 +4,7 @@ use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Cache\Factory as CacheFactoryContract;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
+use function Pest\Laravel\actingAs;
 use Rawilk\Webauthn\Actions\PrepareAssertionData;
 use Rawilk\Webauthn\Actions\PrepareKeyCreationData;
 use Rawilk\Webauthn\Actions\RegisterNewKeyAction;
@@ -14,7 +15,6 @@ use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialLoader;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialUserEntity;
-use function Pest\Laravel\actingAs;
 
 uses(RefreshDatabase::class);
 
