@@ -1,0 +1,12 @@
+{
+    "main": "dist/webauthn.js",
+    "name": "laravel-webauthn",
+    "scripts": {},
+    "author": "Randall Wilk",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.17.12",
+        "@babel/preset-env": "^7.17.12",
+        "laravel-mix": "^6.0.43"
+    }
+}

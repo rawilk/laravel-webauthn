@@ -8,6 +8,7 @@ build
 composer.lock
 coverage
 node_modules
+package-lock.json
 phpstan.neon
 phpunit.xml
 psalm.xml
