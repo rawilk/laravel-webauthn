@@ -6,6 +6,8 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rawilk/laravel-webauthn?style=flat-square)](https://packagist.org/packages/rawilk/laravel-webauthn)
 [![License](https://img.shields.io/github/license/rawilk/laravel-webauthn?style=flat-square)](https://github.com/rawilk/laravel-webauthn/blob/main/LICENSE.md)
 
+![Social image](https://banners.beyondco.de/laravel-webauthn.png?theme=light&packageManager=composer+require&packageName=rawilk%2Flaravel-webauthn&pattern=randomShapes&style=style_1&description=Add+WebAuthn+functionality+to+Laravel.&md=1&showWatermark=0&fontSize=100px&images=key)
+
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
