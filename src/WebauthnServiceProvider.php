@@ -9,10 +9,13 @@ use Cose\Algorithm\ManagerFactory as CoseAlgorithmManagerFactory;
 use Cose\Algorithm\Signature\ECDSA;
 use Cose\Algorithm\Signature\EdDSA;
 use Cose\Algorithm\Signature\RSA;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Rawilk\Webauthn\Contracts\WebauthnKey as WebauthnKeyContract;
 use Rawilk\Webauthn\Facades\Webauthn as WebauthnFacade;
+use Rawilk\Webauthn\Http\Controllers\AssetsController;
 use Rawilk\Webauthn\Models\WebauthnKey;
 use Rawilk\Webauthn\Services\Webauthn;
 use Spatie\LaravelPackageTools\Package;
@@ -45,7 +48,6 @@ class WebauthnServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-webauthn')
             ->hasConfigFile()
-            ->hasViews()
             ->hasMigration('create_webauthn_table')
             ->hasTranslations();
     }
@@ -55,6 +57,16 @@ class WebauthnServiceProvider extends PackageServiceProvider
         $this->app->singleton(WebauthnFacade::class, Webauthn::class);
 
         $this->registerBindings();
+    }
+
+    public function packageBooted(): void
+    {
+        Blade::directive('webauthnScripts', function (string $expression) {
+            return "<?php echo (new \Rawilk\Webauthn\Support\WebauthnAssets)->javaScript({$expression}) ?>";
+        });
+
+        Route::get('/webauthn/webauthn.js', [AssetsController::class, 'source']);
+        Route::get('/webauthn/webauthn.js.map', [AssetsController::class, 'maps']);
     }
 
     protected function registerBindings(): void

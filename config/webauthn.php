@@ -188,4 +188,19 @@ return [
     |
     */
     'userless' => env('WEBAUTHN_USERLESS'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Assets URL
+    |--------------------------------------------------------------------------
+    |
+    | This value sets the path to the WebAuthn JavaScript assets for cases
+    | where your app's domain root is not the correct path. By default,
+    | WebAuthn will load its JavaScript assets from the app's
+    | "relative root".
+    |
+    | Examples: "/assets", "myapp.com/app",
+    |
+    */
+    'asset_url' => null,
 ];
