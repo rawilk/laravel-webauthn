@@ -12,4 +12,22 @@ interface WebauthnKey
     public function setPublicKeyCredentialSourceAttribute(PublicKeyCredentialSource $source): void;
 
     public static function fromPublicKeyCredentialSource(PublicKeyCredentialSource $publicKeyCredentialSource, User $user, string $keyName, ?string $attachmentType = null): self;
+
+    /**
+     * Return the date the WebAuthn key was created wrapped in a <time>
+     * HTML tag.
+     *
+     * @param string $timezone
+     * @return string
+     */
+    public function createdAtHtml(string $timezone = 'UTC'): string;
+
+    /**
+     * Return the date the WebAuthn key was last used wrapped in
+     * a <time> HTML tag.
+     *
+     * @param string $timezone
+     * @return string
+     */
+    public function lastUsedAtHtml(string $timezone = 'UTC'): string;
 }

@@ -125,4 +125,26 @@ class WebauthnKey extends Model implements WebauthnKeyContract
     {
         return $this->belongsTo(config('auth.providers.users.model'));
     }
+
+    public function createdAtHtml(string $timezone = 'UTC'): string
+    {
+        $date = $this->created_at?->clone()->tz($timezone);
+
+        return <<<HTML
+        <time datetime="{$date?->toDateTimeString()}">{$date?->format('M d Y, g:i a')}</time>
+        HTML;
+    }
+
+    public function lastUsedAtHtml(string $timezone = 'UTC'): string
+    {
+        $date = $this->last_used_at?->clone()->tz($timezone);
+
+        if (! $date) {
+            return __('webauthn::labels.webauthn_key_never_used');
+        }
+
+        return <<<HTML
+        <time datetime="{$date->toDateTimeString()}">{$date->format('M d Y, g:i a')}</time>
+        HTML;
+    }
 }
