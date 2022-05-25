@@ -29,19 +29,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Max Keys Allowed
-    |--------------------------------------------------------------------------
-    |
-    | Set a maximum amount of security keys a user may register to their
-    | account. Most websites allow up to 5 per user.
-    |
-    | Set to `null` for unlimited amount of keys per user.
-    |
-    */
-    'max_keys_per_user' => env('WEBAUTHN_MAX_KEYS_PER_USER', 5),
-
-    /*
-    |--------------------------------------------------------------------------
     | Webauthn Challenge Length
     |--------------------------------------------------------------------------
     |

@@ -109,7 +109,7 @@ class Webauthn extends WebauthnRepository
      */
     public function canRegister(User $user): bool
     {
-        return $this->webauthnIsEnabled() && ! $this->maxKeysHasBeenReached($user);
+        return $this->webauthnIsEnabled();
     }
 
     /**
@@ -125,22 +125,6 @@ class Webauthn extends WebauthnRepository
     }
 
     /**
-     * Check if a given user has registered the maximum amount of allowed keys per user.
-     *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     * @return bool
-     */
-    public function maxKeysHasBeenReached(User $user): bool
-    {
-        $max = $this->maxKeysAllowedPerUser();
-        if ($max === null) {
-            return false;
-        }
-
-        return $this->keyCountFor($user) >= $max;
-    }
-
-    /**
      * Check if webauthn is configured to be enabled for this application.
      *
      * @return bool
@@ -148,10 +132,5 @@ class Webauthn extends WebauthnRepository
     public function webauthnIsEnabled(): bool
     {
         return (bool) config('webauthn.enabled', true);
-    }
-
-    protected function maxKeysAllowedPerUser(): ?int
-    {
-        return config('webauthn.max_keys_per_user', 5);
     }
 }

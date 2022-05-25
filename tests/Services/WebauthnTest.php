@@ -31,11 +31,11 @@ it('can determine if a user has webauthn enabled for their account', function ()
 
 it('can determine if a user is allowed to register a new key to their account', function () {
     $user = user();
-    config(['webauthn.max_keys_per_user' => 5]);
+    config(['webauthn.enabled' => true]);
 
     expect($this->app[Webauthn::class]->canRegister($user))->toBeTrue();
 
-    WebauthnKey::factory()->for($user)->count(5)->create();
+    config(['webauthn.enabled' => false]);
 
     expect($this->app[Webauthn::class]->canRegister($user))->toBeFalse();
 });
