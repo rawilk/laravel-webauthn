@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use Rawilk\Webauthn\Contracts\WebauthnKey;
+use Rawilk\Webauthn\Events\WebauthnKeyWasUsed;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
@@ -45,6 +46,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
         $webauthnKey->public_key_credential_source = $publicKeyCredentialSource;
         $webauthnKey->last_used_at = now();
         $webauthnKey->save();
+
+        WebauthnKeyWasUsed::dispatch($webauthnKey);
     }
 
     /**
