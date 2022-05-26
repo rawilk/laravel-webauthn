@@ -37,6 +37,8 @@ abstract class WebauthnRepository
 
     public function hasKey(User $user): bool
     {
-        return $this->keyCountFor($user) > 0;
+        return app(WebauthnKey::class)::query()
+            ->where('user_id', $user->getAuthIdentifier())
+            ->exists();
     }
 }
