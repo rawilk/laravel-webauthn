@@ -53,14 +53,15 @@ Please review [my security policy](.github/SECURITY.md) on how to report securit
 
 ## Credits
 
-- [Randall Wilk](https://github.com/rawilk)
-- [All Contributors](../../contributors)
+-   [Randall Wilk](https://github.com/rawilk)
+-   [All Contributors](../../contributors)
 
 ## Alternatives
+
 This package aims to provide only the bare necessities required to utilize WebAuthn in your application, which provides the freedom to incorporate it into your project based on your own needs and desires. If you're looking for a more complete solution, consider one of these alternatives:
 
-- [Larapass](https://github.com/DarkGhostHunter/Larapass)
-- [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+-   [Larapass](https://github.com/DarkGhostHunter/Larapass)
+-   [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 
 ## License
 
