@@ -53,6 +53,8 @@ Please review [my security policy](.github/SECURITY.md) on how to report securit
 
 ## Credits
 
+This package is heavily inspired from Larapass and asbiin/laravel-webauthn.
+
 -   [Randall Wilk](https://github.com/rawilk)
 -   [All Contributors](../../contributors)
 
