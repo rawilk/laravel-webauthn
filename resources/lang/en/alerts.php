@@ -7,4 +7,5 @@ return [
     'key_validation_error' => 'An error occurred during the validation of the key.',
     'key_not_allowed_error' => 'The operation either timed out or was not allowed.',
     'key_already_used' => "This key is already registered. It's not necessary to register it again.",
+    'login_not_allowed_error' => 'Please try again or use a different authentication method.',
 ];
