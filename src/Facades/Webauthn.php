@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool hasKey(User $user)
  * @method static int keyCountFor(User $user)
  * @method static \Illuminate\Support\Collection keysFor(User $user)
- * @method static bool maxKeysHasBeenReached(User $user)
  * @method static \Webauthn\PublicKeyCredentialOptions prepareAttestation(User $user, ?string $attachmentType = null)
  * @method static \Webauthn\PublicKeyCredentialSource validateAttestation(User $user, array $credentials)
  * @method static \Webauthn\PublicKeyCredentialRequestOptions prepareAssertion(User $user)
