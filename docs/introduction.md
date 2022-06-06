@@ -10,5 +10,5 @@ As a note, this package only provides the code necessary for registering and ass
 
 ## Alternatives
 
-- [Larapass](https://github.com/DarkGhostHunter/Larapass)
-- [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+-   [Larapass](https://github.com/DarkGhostHunter/Larapass)
+-   [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
