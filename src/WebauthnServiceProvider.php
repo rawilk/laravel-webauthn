@@ -65,8 +65,7 @@ class WebauthnServiceProvider extends PackageServiceProvider
             return "<?php echo (new \Rawilk\Webauthn\Support\WebauthnAssets)->javaScript({$expression}) ?>";
         });
 
-        Route::get('/webauthn/webauthn.js', [AssetsController::class, 'source']);
-        Route::get('/webauthn/webauthn.js.map', [AssetsController::class, 'maps']);
+        Route::get('/webauthn/assets/{asset}', [AssetsController::class, 'source']);
     }
 
     protected function registerBindings(): void

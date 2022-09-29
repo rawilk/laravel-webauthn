@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Rawilk\Webauthn\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
 use Rawilk\Webauthn\Http\Controllers\Concerns\CanPretendToBeAFile;
 
 final class AssetsController
 {
     use CanPretendToBeAFile;
 
-    public function source()
+    public function source(string $asset)
     {
-        return $this->pretendResponseIsFile(__DIR__ . '/../../../dist/webauthn.js');
-    }
+        $path = __DIR__ . "/../../../dist/assets/{$asset}";
 
-    public function maps()
-    {
-        return $this->pretendResponseIsFile(__DIR__ . '/../../../dist/webauthn.js.map');
+        if (! File::exists($path)) {
+            return '';
+        }
+
+        return $this->pretendResponseIsFile(__DIR__ . "/../../../dist/assets/{$asset}");
     }
 }

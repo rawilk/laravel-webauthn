@@ -20,12 +20,12 @@ class WebauthnAssets
         $appUrl = config('webauthn.asset_url', rtrim($options['asset_url'] ?? '', '/'));
 
         $manifest = json_decode(file_get_contents(__DIR__ . '/../../dist/mix-manifest.json'), true);
-        $versionedFileName = $manifest['/webauthn.js'];
+        $versionedFileName = $manifest['resources/js/webauthn.js']['file'];
 
-        $fullAssetPath = "{$appUrl}/webauthn{$versionedFileName}";
+        $fullAssetPath = "{$appUrl}/webauthn/{$versionedFileName}";
 
         return <<<HTML
-        <script src="{$fullAssetPath}" data-turbolinks-eval="false"></script>
+        <script src="{$fullAssetPath}" data-turbolinks-eval="false" data-turbo-eval="false"></script>
         HTML;
     }
 }
