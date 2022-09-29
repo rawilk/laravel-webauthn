@@ -11,9 +11,12 @@
 /babel.config.js       export-ignore
 /bin                   export-ignore
 /docs                  export-ignore
+/package.json          export-ignore
 /phpunit.xml.dist      export-ignore
+/pint.json             export-ignore
 /psalm.xml.dist        export-ignore
 /phpstan.neon.dist     export-ignore
 /phpstan-baseline.neon export-ignore
 /tests                 export-ignore
 /testbench.yaml        export-ignore
+/webpack.mix.js        export-ignore
