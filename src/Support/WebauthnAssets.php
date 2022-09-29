@@ -19,8 +19,8 @@ class WebauthnAssets
     {
         $appUrl = config('webauthn.asset_url', rtrim($options['asset_url'] ?? '', '/'));
 
-        $manifest = json_decode(file_get_contents(__DIR__ . '/../../dist/manifest.json'), true);
-        $versionedFileName = $manifest['resources/js/webauthn.js']['file'];
+        $manifest = json_decode(file_get_contents(__DIR__ . '/../../dist/mix-manifest.json'), true);
+        $versionedFileName = ltrim($manifest['/assets/webauthn.js'], '/');
 
         $fullAssetPath = "{$appUrl}/webauthn/{$versionedFileName}";
 

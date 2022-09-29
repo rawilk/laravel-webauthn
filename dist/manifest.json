@@ -1,7 +1,0 @@
-{
-  "resources/js/webauthn.js": {
-    "file": "assets/webauthn.06b82112.js",
-    "src": "resources/js/webauthn.js",
-    "isEntry": true
-  }
-}

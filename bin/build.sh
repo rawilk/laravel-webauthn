@@ -1,4 +1,4 @@
 #!/bin/sh
 
 composer format
-npm run build
+npx mix --production
