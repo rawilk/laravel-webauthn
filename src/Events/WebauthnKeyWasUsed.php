@@ -10,7 +10,8 @@ use Rawilk\Webauthn\Contracts\WebauthnKey;
 
 class WebauthnKeyWasUsed
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public function __construct(public WebauthnKey $webauthnKey)
     {

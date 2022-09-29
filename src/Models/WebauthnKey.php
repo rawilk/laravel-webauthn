@@ -35,6 +35,7 @@ use Webauthn\PublicKeyCredentialSource;
  * @property \Illuminate\Support\Carbon|null $last_used_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rawilk\Webauthn\Models\WebauthnKey newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Rawilk\Webauthn\Models\WebauthnKey query()
  * @mixin \Eloquent

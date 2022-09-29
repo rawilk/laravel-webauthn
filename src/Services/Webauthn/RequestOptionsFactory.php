@@ -49,7 +49,7 @@ class RequestOptionsFactory extends OptionsFactory
     /**
      * Get the user verification preference.
      *
-     * @param \Illuminate\Contracts\Config\Repository $config
+     * @param  \Illuminate\Contracts\Config\Repository  $config
      * @return string|null
      */
     private function getUserVerification(Config $config): ?string

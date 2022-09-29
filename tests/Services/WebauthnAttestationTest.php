@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use function Pest\Laravel\actingAs;
 use Rawilk\Webauthn\Actions\PrepareAssertionData;
 use Rawilk\Webauthn\Actions\PrepareKeyCreationData;
-use Rawilk\Webauthn\Actions\RegisterNewKeyAction;
 use Rawilk\Webauthn\Models\WebauthnKey;
 use Rawilk\Webauthn\Services\Webauthn\CredentialAttestationValidator;
 use Webauthn\AuthenticatorAttestationResponseValidator;
@@ -32,30 +31,6 @@ it('can create a public key for registering a new key', function () {
     expect($publicKey->getUser())->toBeInstanceOf(PublicKeyCredentialUserEntity::class);
     expect($publicKey->getUser()->getId())->toEqual($user->getAuthIdentifier());
     expect($publicKey->getUser()->getDisplayName())->toBe($user->email);
-});
-
-it('can validate and create a new security key for a user', function () {
-    $user = user();
-
-    $publicKey = $this->app[PrepareKeyCreationData::class]($user);
-    expect($publicKey)->toBeInstanceOf(PublicKeyCredentialCreationOptions::class);
-
-    $data = attestationData($publicKey);
-
-    $this->app[RegisterNewKeyAction::class]($user, $data, 'name');
-
-    $this->assertDatabaseHas('webauthn_keys', [
-        'user_id' => $user->getAuthIdentifier(),
-        'name' => 'name',
-        'credential_id' => 'MA==',
-        'type' => 'public-key',
-        'transports' => '[]',
-        'attestation_type' => 'none',
-        'trust_path' => '{"type":"Webauthn\\\\TrustPath\\\\EmptyTrustPath"}',
-        'aaguid' => '00000000-0000-0000-0000-000000000000',
-        'credential_public_key' => 'oWNrZXlldmFsdWU=',
-        'counter' => '1',
-    ]);
 });
 
 it('can create a public key for asserting a security key is registered to a given user', function () {

@@ -175,7 +175,8 @@ test('assertion fails if response is incorrect', function () {
     $credential = Mockery::mock(PublicKeyCredential::class);
     $credential->shouldReceive('getRawId')->andReturn('test_credential_id');
     $credential->shouldReceive('getResponse')
-        ->andReturn(new class extends \Webauthn\AuthenticatorResponse {
+        ->andReturn(new class extends \Webauthn\AuthenticatorResponse
+        {
             public function __construct()
             {
             }

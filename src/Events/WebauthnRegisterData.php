@@ -11,7 +11,8 @@ use Webauthn\PublicKeyCredentialCreationOptions;
 
 class WebauthnRegisterData
 {
-    use SerializesModels, Dispatchable;
+    use SerializesModels;
+    use Dispatchable;
 
     public function __construct(
         public User $user,

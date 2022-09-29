@@ -68,7 +68,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
     /**
      * List all registered PublicKeyCredentialDescriptor associated with a user.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return array<int, \Webauthn\PublicKeyCredentialDescriptor>
      */
     public function getRegisteredKeys(User $user): array

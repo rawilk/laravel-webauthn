@@ -7,6 +7,7 @@ namespace Rawilk\Webauthn\Services\Webauthn;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Http\Request;
+use function random_bytes;
 use Webauthn\PublicKeyCredentialSourceRepository;
 
 abstract class OptionsFactory extends CredentialValidator
@@ -35,6 +36,6 @@ abstract class OptionsFactory extends CredentialValidator
 
     protected function getChallenge(): string
     {
-        return \random_bytes($this->challengeLength);
+        return random_bytes($this->challengeLength);
     }
 }
