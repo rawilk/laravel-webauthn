@@ -1,5 +1,14 @@
 'use strict';
 
+import { browserSupportsWebAuthn } from './helpers/browserSupportsWebAuthn';
+import { base64URLStringToBuffer } from './helpers/base64URLStringToBuffer';
+import { toPublicKeyCredentialDescriptor } from './helpers/toPublicKeyCredentialDescriptor';
+import { webauthnAbortService } from './helpers/webAuthnAbortService';
+import { preparePublicKeyCredentials } from './helpers/preparePublicKeyCredentials';
+import { errorNames, identifyAuthenticationError } from './helpers/identifyAuthenticationError';
+import { utf8StringToBuffer } from './helpers/utf8StringToBuffer';
+import { guessDeviceName } from './helpers/guessDeviceName';
+
 class WebAuthn {
     /**
      * @param {function(string, string)} notifyCallback
@@ -26,24 +35,47 @@ class WebAuthn {
      * @param {PublicKeyCredentialCreationOptions} publicKey - see https://www.w3.org/TR/webauthn/#dictdef-publickeycredentialcreationoptions
      * @param {function(PublicKeyCredential)} callback  User callback
      */
-    register(publicKey, callback) {
-        const publicKeyCredential = Object.assign({}, publicKey);
-        publicKeyCredential.user.id = this._bufferDecode(publicKey.user.id);
-        publicKeyCredential.challenge = this._bufferDecode(this._base64Decode(publicKey.challenge));
-        if (publicKey.excludeCredentials) {
-            publicKeyCredential.excludeCredentials = this._credentialDecode(publicKey.excludeCredentials);
+    async register(publicKey, callback) {
+        if (! this.supported()) {
+            throw new Error('WebAuthn is not supported in this browser.');
         }
 
-        navigator.credentials.create({
+        const publicKeyCredential = Object.assign({}, publicKey);
+
+        // We need to convert some values to Uint8Arrays before passing the credentials to the navigator.
+        publicKeyCredential.challenge = base64URLStringToBuffer(publicKey.challenge);
+        publicKeyCredential.user.id = utf8StringToBuffer(publicKey.user.id);
+        publicKeyCredential.excludeCredentials = publicKey.excludeCredentials?.map(toPublicKeyCredentialDescriptor);
+
+        /** @var {CredentialCreationOptions} options */
+        const options = {
             publicKey: publicKeyCredential,
-        }).then(data => {
-            this._onRegister(data, callback);
-        }, error => {
-            // User probably canceled the operation.
-            this._notify(error.name, error.message);
-        }).catch(error => {
-            this._notify('unknown', error.message);
-        });
+
+            // Set up the ability to cancel this request if the user attempts another.
+            signal: webauthnAbortService.createNewAbortSignal(),
+        };
+
+        // Wait for the user to complete attestation.
+        let credential;
+        try {
+            credential = await navigator.credentials.create(options);
+        } catch (e) {
+            const { name, default: defaultMessage } = identifyAuthenticationError(e, options);
+
+            this._notify(name, defaultMessage);
+
+            return;
+        } finally {
+            webauthnAbortService.reset();
+        }
+
+        if (! credential) {
+            this._notify(errorNames.Unknown, 'Authentication was not completed.');
+
+            return;
+        }
+
+        callback(preparePublicKeyCredentials(credential), guessDeviceName(credential));
     }
 
     /**
@@ -52,23 +84,46 @@ class WebAuthn {
      * @param {PublicKeyCredentialRequestOptions} publicKey
      * @param {function(PublicKeyCredential)} callback
      */
-    sign(publicKey, callback) {
-        const publicKeyCredential = Object.assign({}, publicKey);
-        publicKeyCredential.challenge = this._bufferDecode(this._base64Decode(publicKey.challenge));
-        if (publicKey.allowCredentials) {
-            publicKeyCredential.allowCredentials = this._credentialDecode(publicKey.allowCredentials);
+    async sign(publicKey, callback) {
+        if (! this.supported()) {
+            throw new Error('WebAuthn is not supported in this browser.');
         }
 
-        navigator.credentials.get({
+        const publicKeyCredential = Object.assign({}, publicKey);
+
+        // We need to convert some values to Uint8Arrays before passing the credentials to the navigator.
+        publicKeyCredential.challenge = base64URLStringToBuffer(publicKey.challenge);
+        if (publicKey.allowCredentials) {
+            publicKeyCredential.allowCredentials = publicKey.allowCredentials.map(toPublicKeyCredentialDescriptor);
+        }
+
+        /** @var {CredentialCreationOptions} options */
+        const options = {
             publicKey: publicKeyCredential,
-        }).then(data => {
-            this._onSign(data, callback);
-        }, error => {
-            // The user probably canceled the operation.
-            this._notify(error.name, error.message);
-        }).catch(error => {
-            this._notify('unknown', error.message);
-        });
+            signal: webauthnAbortService.createNewAbortSignal(),
+        };
+
+        // Wait for the user to complete the assertion.
+        let credential;
+        try {
+            credential = await navigator.credentials.get(options);
+        } catch (e) {
+            const { name, default: defaultMessage } = identifyAuthenticationError(e, options);
+
+            this._notify(name, defaultMessage);
+
+            return;
+        } finally {
+            webauthnAbortService.reset();
+        }
+
+        if (! credential) {
+            this._notify(errorNames.Unknown, 'Authentication was not completed.');
+
+            return;
+        }
+
+        callback(preparePublicKeyCredentials(credential));
     }
 
     /**
@@ -77,9 +132,7 @@ class WebAuthn {
      * @returns {boolean}
      */
     supported() {
-        return ! (window.PublicKeyCredential === undefined ||
-            typeof window.PublicKeyCredential !== 'function' ||
-            typeof window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable !== 'function');
+        return browserSupportsWebAuthn();
     }
 
     notSupportedType() {
@@ -88,67 +141,6 @@ class WebAuthn {
         }
 
         return 'notSupported';
-    }
-
-    /**
-     * @param {ArrayBuffer} value
-     * @returns {Uint8Array}
-     * @private
-     */
-    _bufferDecode(value) {
-        let t = window.atob(value);
-
-        return Uint8Array.from(t, c => c.charCodeAt(0));
-    }
-
-    /**
-     * @param {ArrayBuffer} value
-     * @returns {string}
-     * @private
-     */
-    _bufferEncode(value) {
-        return window.btoa(String.fromCharCode.apply(null, new Uint8Array(value)));
-    }
-
-    /**
-     * Convert a base64url to a base64 string.
-     *
-     * @param {string} input
-     * @returns {string}
-     * @private
-     */
-    _base64Decode(input) {
-        // Replace non-url compatible chars with base64 standard chars.
-        input = input.replace(/-/g, '+').replace(/_/g, '/');
-
-        // Pad out with standard base64 required padding characters.
-        const pad = input.length % 4;
-        if (pad) {
-            if (pad === 1) {
-                throw new Error('InvalidLengthError: Input base64url string is the wrong length to determine padding.');
-            }
-
-            input += new Array(5 - pad).join('=');
-        }
-
-        return input;
-    }
-
-    /**
-     * Decode the given public key credentials.
-     *
-     * @param {PublicKeyCredentialDescriptor} credentials
-     * @return {PublicKeyCredentialDescriptor}
-     * @private
-     */
-    _credentialDecode(credentials) {
-        return credentials.map(data => {
-            return {
-                id: this._bufferDecode(this._base64Decode(data.id)),
-                type: data.type,
-                transports: data.transports,
-            };
-        });
     }
 
     /**
@@ -161,89 +153,6 @@ class WebAuthn {
         if (this.notifyCallback) {
             this.notifyCallback(name, defaultMessage);
         }
-    }
-
-    /**
-     * @param {PublicKeyCredential} publicKey
-     * @param {function(PublicKeyCredential, string)} callback
-     * @private
-     */
-    _onRegister(publicKey, callback) {
-        const publicKeyCredential = {
-            id: publicKey.id,
-            type: publicKey.type,
-            rawId: this._bufferEncode(publicKey.rawId),
-            response: {
-                /** @see https://www.w3.org/TR/webauthn/#authenticatorattestationresponse */
-                clientDataJSON: this._bufferEncode(publicKey.response.clientDataJSON),
-                attestationObject: this._bufferEncode(publicKey.response.attestationObject),
-            },
-        };
-
-        callback(publicKeyCredential, this._guessDeviceName(publicKey));
-    }
-
-    /**
-     * @param {PublicKeyCredential} publicKey
-     * @param {function(PublicKeyCredential)} callback
-     * @private
-     */
-    _onSign(publicKey, callback) {
-        const publicKeyCredential = {
-            id: publicKey.id,
-            type: publicKey.type,
-            rawId: this._bufferEncode(publicKey.rawId),
-            response: {
-                /** @see https://www.w3.org/TR/webauthn/#iface-authenticatorassertionresponse */
-                authenticatorData: this._bufferEncode(publicKey.response.authenticatorData),
-                clientDataJSON: this._bufferEncode(publicKey.response.clientDataJSON),
-                signature: this._bufferEncode(publicKey.response.signature),
-                userHandle: (publicKey.response.userHandle ? this._bufferEncode(publicKey.response.userHandle): null),
-            },
-        };
-
-        callback(publicKeyCredential);
-    }
-
-    /**
-     * Attempt to guess the device name the user is using as a key.
-     *
-     * @param {PublicKeyCredential} publicKey
-     * @returns {string}
-     * @private
-     */
-    _guessDeviceName(publicKey) {
-        if (! publicKey.response.getTransports().includes('internal')) {
-            return 'Security key';
-        }
-
-        const userAgent = navigator.userAgent,
-              platform = navigator.platform,
-              macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
-              windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-              iosPlatforms = ['iPhone', 'iPad', 'iPod'];
-
-        if (macosPlatforms.includes(platform)) {
-            return 'macOS Computer';
-        }
-
-        if (iosPlatforms.includes(platform)) {
-            return 'iOS Phone';
-        }
-
-        if (windowsPlatforms.includes(platform)) {
-            return 'Windows Computer';
-        }
-
-        if (/Android/.test(userAgent)) {
-            return 'Android Phone';
-        }
-
-        if (/Linux/.test(platform)) {
-            return 'Linux Computer';
-        }
-
-        return 'Unknown Device Type';
     }
 }
 
