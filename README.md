@@ -61,11 +61,13 @@ This package is heavily inspired from Larapass and asbiin/laravel-webauthn.
 -   [Randall Wilk](https://github.com/rawilk)
 -   [All Contributors](../../contributors)
 
+Since the `v1.0.1` patch, a considerable amount of the JavaScript portion of this package has been sourced from the [SimpleWebAuthn](https://github.com/MasterKale/SimpleWebAuthn) package made by [Matthew Miller](https://github.com/MasterKale). His copyright has been added to the license file, and copyright notices have been placed in JS files where the code is extremely close to what his is.
+
 ## Alternatives
 
 This package aims to provide only the bare necessities required to utilize WebAuthn in your application, which provides the freedom to incorporate it into your project based on your own needs and desires. If you're looking for a more complete solution, consider one of these alternatives:
 
--   [Larapass](https://github.com/DarkGhostHunter/Larapass)
+-   [Laragear Webauthn](https://github.com/Laragear/WebAuthn)
 -   [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 
 ## License
