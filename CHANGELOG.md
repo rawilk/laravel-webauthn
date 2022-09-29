@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-webauthn` will be documented in this file
 
+## 1.0.3 - 2022-09-29
+### Changed
+- Revert build process to use laravel-mix
+
 ## 1.0.2 - 2022-09-29
 ### Fixed
 - Fix manifest.json path in `WebauthnAssets.php` helper
