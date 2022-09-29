@@ -10,6 +10,9 @@ Before a user can use a security for authentication, they must first register it
 ## Prepare Attestation
 
 ```php
+<?php
+
+use Illuminate\Support\Facades\Lang;
 use Livewire\Component;
 use Rawilk\Webauthn\Actions\PrepareKeyCreationData;
 
@@ -34,6 +37,16 @@ class RegisterWebauthnKey extends Component
     * Indicates security key instructions should be shown in the modal.
     */
     public bool $showInstructions = true;
+    
+    public function getErrorMessagesProperty(): array
+    {
+        return [
+            ...Lang::get('webauthn::alerts.auth') ?? [],
+            'InvalidStateError' => __('webauthn::alerts.login_not_allowed_error'),
+            'notSupported' => __('webauthn::alerts.browser_not_supported'),
+            'notSecured' => __('webauthn::alerts.browser_not_secure'),
+        ];
+    }
     
     /**
      * Show the register security key modal dialog.
@@ -76,17 +89,14 @@ In this portion, we are going to display a modal popup when the user clicks a bu
     keyName: @entangle('newKeyName').defer,
     showInstructions: @entangle('showInstructions').defer,
     showName: false,
-    errorMessage: null,
-    notifyCallback() {
-        return errorName => this.errorMessage = this.errorMessages[errorName];
-    },
     webAuthn: new WebAuthn,
     webAuthnSupported: true,
-    errorMessages: {
-        NotAllowedError: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.key_not_allowed_error')) }},
-        InvalidStateError: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.key_already_used')) }},
-        notSupported: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.browser_not_supported')) }},
-        notSecured: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.browser_not_secure')) }},
+    errorMessages: {{ Js::from($this->errorMessages) }},
+    errorMessage: null,
+    notifyCallback() {
+        return (errorName, defaultMessage) => {
+            this.errorMessage = this.errorMessages[errorName] || defaultMessage;
+        };
     },
     keyData: null,
     publicKey: @entangle('publicKey').defer,

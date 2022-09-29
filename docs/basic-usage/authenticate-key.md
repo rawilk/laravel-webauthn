@@ -20,6 +20,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Requests\TwoFactorLoginRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Lang;
 use Livewire\Component;
 use Rawilk\Webauthn\Actions\PrepareAssertionData;
 use Rawilk\Webauthn\Facades\Webauthn;
@@ -32,6 +33,16 @@ class TwoFactorChallenge extends Component
      */
     public string $publicKey = '';
     public $keyData;
+    
+    public function getErrorMessagesProperty(): array
+    {
+        return [
+            ...Lang::get('webauthn::alerts.auth') ?? [],
+            'InvalidStateError' => __('webauthn::alerts.login_not_allowed_error'),
+            'notSupported' => __('webauthn::alerts.browser_not_supported'),
+            'notSecured' => __('webauthn::alerts.browser_not_secure'),
+        ];
+    }
     
     // See code below for request example
     public function login(TwoFactorLoginRequest $request)
@@ -147,15 +158,12 @@ With the server side code out of the way, all that's left is rendering a view to
         publicKey: @entangle('publicKey').defer,
         keyData: @entangle('keyData').defer,
         webAuthnSupported: true,
-        errorMessages: {
-            NotAllowedError: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.login_not_allowed_error')) }},
-            InvalidStateError: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.login_not_allowed_error')) }},
-            notSupported: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.browser_not_supported')) }},
-            notSecured: {{ \Illuminate\Support\Js::from(trans('webauthn::alerts.browser_not_secure')) }},
-        },
+        errorMessages: {{ Js::from($this->errorMessages) }},
         errorMessage: null,
         notifyCallback() {
-            return errorName => this.errorMessage = this.errorMessages[errorName];
+            return (errorName, defaultMessage) => {
+                this.errorMessage = this.errorMessages[errorName] || defaultMessage;
+            };
         },
         webAuthn: new WebAuthn,
         init() {
