@@ -7,7 +7,7 @@ mix.options({
             compress: {
                 drop_console: true,
             },
-            // Prevent LICENSE.txt files being generated.
+            // Prevent LICENSE.txt files from being generated.
             format: {
                 comments: false,
             }

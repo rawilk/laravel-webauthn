@@ -22,6 +22,6 @@ final class AssetsController
             return '';
         }
 
-        return $this->pretendResponseIsFile(__DIR__ . "/../../../dist/assets/{$fileName}");
+        return $this->pretendResponseIsFile($path);
     }
 }
