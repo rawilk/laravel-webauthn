@@ -51,6 +51,7 @@
         "web-token/jwt-key-mgmt": "Required for the AndroidSafetyNet Attestation Statement support"
     },
     "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "test": "vendor/bin/pest -p",
         "format": "vendor/bin/pint"
     },
