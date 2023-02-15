@@ -53,7 +53,6 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
     /**
      * List all PublicKeyCredentialSource associated with a user.
      *
-     * @param $userId
      * @return \Illuminate\Support\Collection<int, \Webauthn\PublicKeyCredentialSource>
      */
     protected function getAllRegisteredKeys($userId): Collection
@@ -68,7 +67,6 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
     /**
      * List all registered PublicKeyCredentialDescriptor associated with a user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return array<int, \Webauthn\PublicKeyCredentialDescriptor>
      */
     public function getRegisteredKeys(User $user): array

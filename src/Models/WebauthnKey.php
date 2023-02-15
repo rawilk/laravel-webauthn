@@ -38,6 +38,7 @@ use Webauthn\PublicKeyCredentialSource;
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rawilk\Webauthn\Models\WebauthnKey newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Rawilk\Webauthn\Models\WebauthnKey query()
+ *
  * @mixin \Eloquent
  */
 class WebauthnKey extends Model implements WebauthnKeyContract

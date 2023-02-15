@@ -16,18 +16,12 @@ interface WebauthnKey
     /**
      * Return the date the WebAuthn key was created wrapped in a <time>
      * HTML tag.
-     *
-     * @param  string  $timezone
-     * @return string
      */
     public function createdAtHtml(string $timezone = 'UTC'): string;
 
     /**
      * Return the date the WebAuthn key was last used wrapped in
      * a <time> HTML tag.
-     *
-     * @param  string  $timezone
-     * @return string
      */
     public function lastUsedAtHtml(string $timezone = 'UTC'): string;
 }

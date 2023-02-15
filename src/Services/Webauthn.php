@@ -24,9 +24,7 @@ class Webauthn extends WebauthnRepository
     /**
      * Get a publicKey data set to prepare WebAuthn key creation.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  null|string  $attachmentType For generating a different cache key name for multiple sections of keys in the UI
-     * @return \Webauthn\PublicKeyCredentialCreationOptions
      */
     public function prepareAttestation(User $user, ?string $attachmentType = null): PublicKeyCredentialCreationOptions
     {
@@ -37,10 +35,6 @@ class Webauthn extends WebauthnRepository
 
     /**
      * Validate a WebAuthn key creation request.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  array  $credentials
-     * @return null|\Webauthn\PublicKeyCredentialSource
      */
     public function validateAttestation(User $user, array $credentials): ?PublicKeyCredentialSource
     {
@@ -49,11 +43,6 @@ class Webauthn extends WebauthnRepository
 
     /**
      * Register a new WebAuthn key for a given user.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  array  $credentials
-     * @param  string  $keyName
-     * @return \Rawilk\Webauthn\Contracts\WebauthnKey
      */
     public function registerAttestation(User $user, array $credentials, string $keyName): WebauthnKey
     {
@@ -73,9 +62,6 @@ class Webauthn extends WebauthnRepository
 
     /**
      * Get publicKey data to prepare a WebAuthn login.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return \Webauthn\PublicKeyCredentialRequestOptions
      */
     public function prepareAssertion(User $user): PublicKeyCredentialRequestOptions
     {
@@ -86,10 +72,6 @@ class Webauthn extends WebauthnRepository
 
     /**
      * Validate a WebAuthn login request.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  array  $credentials
-     * @return bool|\Webauthn\PublicKeyCredentialSource
      */
     public function validateAssertion(User $user, array $credentials): bool|PublicKeyCredentialSource
     {
@@ -103,9 +85,6 @@ class Webauthn extends WebauthnRepository
 
     /**
      * Check if a given user can register a new key.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return bool
      */
     public function canRegister(User $user): bool
     {
@@ -115,9 +94,6 @@ class Webauthn extends WebauthnRepository
     /**
      * Check if both WebAuthn is enabled for the application and that
      * the given user has at least one key registered to them.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return bool
      */
     public function enabledFor(User $user): bool
     {
@@ -126,8 +102,6 @@ class Webauthn extends WebauthnRepository
 
     /**
      * Check if webauthn is configured to be enabled for this application.
-     *
-     * @return bool
      */
     public function webauthnIsEnabled(): bool
     {
