@@ -17,17 +17,17 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "illuminate/contracts": "^9.12",
+        "php": "^8.1|^8.2",
+        "illuminate/contracts": "^9.12|^10.0",
         "nyholm/psr7": "^1.5",
         "spatie/laravel-package-tools": "^1.9",
         "symfony/psr-http-message-bridge": "^2.1",
         "web-auth/webauthn-lib": "^4.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.2",
+        "laravel/pint": "^1.5",
         "nunomaduro/collision": "^6.0",
-        "orchestra/testbench": "^7.0",
+        "orchestra/testbench": "^7.0|^8.0",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.1",
         "pestphp/pest-plugin-parallel": "^1.2",
@@ -53,7 +53,7 @@
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "test": "vendor/bin/pest -p",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint --dirty"
     },
     "config": {
         "sort-packages": true,
