@@ -1,9 +1,20 @@
 <?php
 
+use Cose\Algorithm\Manager as CoseAlgorithmManager;
+use Cose\Algorithm\ManagerFactory as CoseAlgorithmManagerFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Rawilk\Webauthn\Models\WebauthnKey;
 use Rawilk\Webauthn\Services\Webauthn;
 use Symfony\Component\Uid\NilUlid;
+use Webauthn\AttestationStatement\AttestationObjectLoader;
+use Webauthn\AttestationStatement\AttestationStatementSupportManager;
+use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
+use Webauthn\AuthenticatorAssertionResponseValidator;
+use Webauthn\AuthenticatorAttestationResponseValidator;
+use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\Counter\CounterChecker;
+use Webauthn\PublicKeyCredentialLoader;
+use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\TrustPath\EmptyTrustPath;
 
@@ -61,3 +72,19 @@ it('creates a new WebauthnKey model', function () {
 
     expect($webauthnKey)->toBeInstanceOf(WebauthnKey::class);
 });
+
+it('registers container bindings via closure', function (string $expectedBinding) {
+    expect($this->app[$expectedBinding])->not->toBeNull($expectedBinding);
+})->with([
+    PackedAttestationStatementSupport::class,
+    AttestationStatementSupportManager::class,
+    AttestationObjectLoader::class,
+    CounterChecker::class,
+    AuthenticatorAttestationResponseValidator::class,
+    AuthenticatorAssertionResponseValidator::class,
+    AuthenticatorSelectionCriteria::class,
+    PublicKeyCredentialRpEntity::class,
+    PublicKeyCredentialLoader::class,
+    CoseAlgorithmManager::class,
+    CoseAlgorithmManagerFactory::class,
+]);

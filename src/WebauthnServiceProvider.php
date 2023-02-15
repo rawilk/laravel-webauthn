@@ -131,9 +131,12 @@ class WebauthnServiceProvider extends PackageServiceProvider
 
         $this->app->bind(
             AttestationObjectLoader::class,
-            fn ($app) => (new AttestationObjectLoader(
-                $app[AttestationStatementSupportManager::class]
-            ))->setLogger($app['log'])
+            function ($app) {
+                $attestationObjectLoader = new AttestationObjectLoader($app[AttestationStatementSupportManager::class]);
+                $attestationObjectLoader->setLogger($app['log']);
+
+                return $attestationObjectLoader;
+            }
         );
 
         $this->app->bind(
@@ -143,24 +146,31 @@ class WebauthnServiceProvider extends PackageServiceProvider
 
         $this->app->bind(
             AuthenticatorAttestationResponseValidator::class,
-            fn ($app) => (new AuthenticatorAttestationResponseValidator(
-                $app[AttestationStatementSupportManager::class],
-                $app[PublicKeyCredentialSourceRepository::class],
-                $app[TokenBindingHandler::class],
-                $app[ExtensionOutputCheckerHandler::class],
-            ))->setLogger($app['log'])
+            function ($app) {
+                $authenticatorAttestationResponseValidator = new AuthenticatorAttestationResponseValidator(
+                    $app[AttestationStatementSupportManager::class],
+                    $app[PublicKeyCredentialSourceRepository::class],
+                    $app[TokenBindingHandler::class],
+                    $app[ExtensionOutputCheckerHandler::class],
+                );
+                $authenticatorAttestationResponseValidator->setLogger($app['log']);
+
+                return $authenticatorAttestationResponseValidator;
+            }
         );
 
-        $this->app->bind(
-            AuthenticatorAssertionResponseValidator::class,
-            fn ($app) => (new AuthenticatorAssertionResponseValidator(
+        $this->app->bind(AuthenticatorAssertionResponseValidator::class, function ($app) {
+            $authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
                 $app[PublicKeyCredentialSourceRepository::class],
                 $app[TokenBindingHandler::class],
                 $app[ExtensionOutputCheckerHandler::class],
-                $app[CoseAlgorithmManager::class]
-            ))->setCounterChecker($app[CounterChecker::class])
-                ->setLogger($app['log'])
-        );
+                $app[CoseAlgorithmManager::class],
+            );
+            $authenticatorAssertionResponseValidator->setCounterChecker($app[CounterChecker::class]);
+            $authenticatorAssertionResponseValidator->setLogger($app['log']);
+
+            return $authenticatorAssertionResponseValidator;
+        });
 
         $this->app->bind(
             AuthenticatorSelectionCriteria::class,
@@ -183,12 +193,12 @@ class WebauthnServiceProvider extends PackageServiceProvider
             )
         );
 
-        $this->app->bind(
-            PublicKeyCredentialLoader::class,
-            fn ($app) => (new PublicKeyCredentialLoader(
-                $app[AttestationObjectLoader::class]
-            ))->setLogger($app['log'])
-        );
+        $this->app->bind(PublicKeyCredentialLoader::class, function ($app) {
+            $publicKeyCredentialLoader = new PublicKeyCredentialLoader($app[AttestationObjectLoader::class]);
+            $publicKeyCredentialLoader->setLogger($app['log']);
+
+            return $publicKeyCredentialLoader;
+        });
 
         $this->app->bind(
             CoseAlgorithmManager::class,
