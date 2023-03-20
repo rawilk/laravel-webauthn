@@ -33,7 +33,7 @@ class TwoFactorChallenge extends Component
      */
     public string $publicKey = '';
     public $keyData;
-    
+
     public function getErrorMessagesProperty(): array
     {
         return [
@@ -43,14 +43,14 @@ class TwoFactorChallenge extends Component
             'notSecured' => __('webauthn::alerts.browser_not_secure'),
         ];
     }
-    
+
     // See code below for request example
     public function login(TwoFactorLoginRequest $request)
     {
         $this->resetErrorBag();
-        
+
         $user = $request->challengedUser();
-        
+
         // WebAuthn package will update the last_used_at timestamp of the key.
         $valid = Webauthn::validateAssertion($user, Arr::only((array) $this->keyData, [
             'id',
@@ -58,26 +58,26 @@ class TwoFactorChallenge extends Component
             'response',
             'type',
         ]));
-        
+
         if (! $valid) {
             // Notify user of failed authentication attempt.
             return;
         }
-        
+
         auth()->login($user);
-        
+
         // Handle successful login
     }
-    
+
     public function mount(TwoFactorLoginRequest $request): void
     {
         if (! $request->hasChallengedUser()) {
             redirect('/login');
         }
-        
+
         $this->publicKey = json_encode(app(PrepareAssertionData::class)($request->challengedUser()));
     }
-    
+
     public function render()
     {
         return view('livewire.two-factor-challenge');
@@ -98,28 +98,28 @@ class TwoFactorLoginRequest extends FormRequest
 {
     /** The user attempting the two factor challenge */
     protected $challengedUser;
-    
+
     public function authorize(): bool
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [];
     }
-    
+
     /**
      * Determine if there is a challenged user in the current session.
      */
     public function hasChallengedUser(): bool
     {
         $model = app(config('auth.providers.users.model'));
-        
+
         return $this->session()->has('login.id')
             && $model::find($this->session()->get('login.id'));
     }
-    
+
     /**
      * Get the user that is attempting the two factor challenge.
      */
@@ -128,16 +128,16 @@ class TwoFactorLoginRequest extends FormRequest
         if ($this->challengedUser) {
             return $this->challengedUser;
         }
-        
+
         $model = app(config('auth.providers.users.model'));
-        
+
         if (
             ! $this->session()->has('login.id')
                 || ! $user = $model::find($this->session()->get('login.id'))
         ) {
             throw new \Exception('No user found.');
         }
-        
+
         return $this->challengedUser = $user;
     }
 }
@@ -150,11 +150,10 @@ With the server side code out of the way, all that's left is rendering a view to
 ```html
 <div>
     {{-- change "head" to a stack name you chose in your layout file. --}}
-    @push('head')
-        @webauthnScripts
-    @endpush
-    
-    <div x-data="{
+    @push('head') @webauthnScripts @endpush
+
+    <div
+        x-data="{
         publicKey: @entangle('publicKey').defer,
         keyData: @entangle('keyData').defer,
         webAuthnSupported: true,
@@ -189,18 +188,20 @@ With the server side code out of the way, all that's left is rendering a view to
                 @this.login();
             });
         },
-    }">
+    }"
+    >
         <div x-show="! errorMessage">
             <p>Interact with your authenticator...</p>
         </div>
-        
+
         <div x-show="errorMessage">
             <p class="text-base text-red-600" x-html="errorMessage"></p>
-            
+
             <div class="mt-10" x-show="webAuthnSupported">
-                <button type="button"
-                        class="..."
-                        x-on:click="errorMessage = null; authenticate();"
+                <button
+                    type="button"
+                    class="..."
+                    x-on:click="errorMessage = null; authenticate();"
                 >
                     Retry
                 </button>

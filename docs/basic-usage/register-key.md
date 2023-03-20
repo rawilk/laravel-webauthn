@@ -19,25 +19,25 @@ use Rawilk\Webauthn\Actions\PrepareKeyCreationData;
 class RegisterWebauthnKey extends Component
 {
     /**
-     * This will be the public key credential options required for the front-end. 
+     * This will be the public key credential options required for the front-end.
      */
     public ?string $publicKey = null;
-    
+
     /**
-     * Indicates whether or not to show the key registration modal. 
+     * Indicates whether or not to show the key registration modal.
      */
     public bool $showAddKey = false;
-    
+
    /**
     * The name for the newly registered security key.
     */
     public string $newKeyName = '';
-    
+
    /**
     * Indicates security key instructions should be shown in the modal.
     */
     public bool $showInstructions = true;
-    
+
     public function getErrorMessagesProperty(): array
     {
         return [
@@ -47,24 +47,24 @@ class RegisterWebauthnKey extends Component
             'notSecured' => __('webauthn::alerts.browser_not_secure'),
         ];
     }
-    
+
     /**
      * Show the register security key modal dialog.
      */
     public function showAddKey(): void
     {
         $this->resetErrorBag();
-        
+
         $this->showInstructions = true;
         $this->showAddKey = true;
     }
-    
+
     public function render()
     {
         if (! $this->publicKey) {
             $this->publicKey = json_encode(app(PrepareKeyCreationData::class)(auth()->user()));
-        }    
-        
+        }
+
         return view('livewire.register-webauthn-key');
     }
 }
@@ -77,15 +77,15 @@ Our client-side scripts will need the `PublicKeyCredentialOptions` object that o
 In this portion, we are going to display a modal popup when the user clicks a button to begin the registration process. For brevity, we'll show some "modal" components written as blade components since they're not important for this step. Be sure to render the form in whatever UI elements you choose for you UI.
 
 ```html
-@if (\Rawilk\Webauthn\Facades\Webauthn::webauthnEnabled())
-@webauthnScripts
+@if (\Rawilk\Webauthn\Facades\Webauthn::webauthnEnabled()) @webauthnScripts
 
 <button type="button" wire:click="showAddKey" class="...">
     Add security key
 </button>
 
 <!-- register modal -->
-<div x-data="{
+<div
+    x-data="{
     keyName: @entangle('newKeyName').defer,
     showInstructions: @entangle('showInstructions').defer,
     showName: false,
@@ -140,58 +140,58 @@ In this portion, we are going to display a modal popup when the user clicks a bu
 >
     <x-dialog-modal wire:model.defer="showAddKey">
         <x-slot name="title">Register Security Key</x-slot>
-        
+
         <x-slot name="content">
             <div x-show="showInstructions && webAuthnSupported">
                 <p>Some instructions on how to use a security key here...</p>
             </div>
-            
+
             <div x-show="! showInstructions || ! webAuthnSupported">
                 <!-- we are waiting for user to interact with their authenticator -->
                 <div x-show="! showName && ! errorMessage && webAuthnSupported">
                     <p>Interact with your authenticator...</p>
                 </div>
-                
+
                 <!-- an error has occurred (user probably canceled) -->
                 <div x-show="errorMessage">
                     <p x-html="errorMessage"></p>
-                    
-                    <button type="button"
-                            x-on:click="register"
-                            class="..."
-                    >
+
+                    <button type="button" x-on:click="register" class="...">
                         Retry
                     </button>
                 </div>
-                
+
                 <!-- registration successful, now name key -->
                 <div x-show="showName">
                     <label for="newKeyName">Name your key</label>
-                    <input x-model="keyName"
-                           name="newKeyName"
-                           id="newKeyName"
-                           required
-                           x-ref="name"
-                           x-on:keydown.enter.prevent.stop="keyName && sendKey"
-                    >
+                    <input
+                        x-model="keyName"
+                        name="newKeyName"
+                        id="newKeyName"
+                        required
+                        x-ref="name"
+                        x-on:keydown.enter.prevent.stop="keyName && sendKey"
+                    />
                 </div>
             </div>
         </x-slot>
-        
+
         <x-slot name="footer">
             <!-- button to open webauthn prompt -->
-            <button type="button"
-                    x-show="showInstructions"
-                    x-on:click="register"
-                    class="..."
+            <button
+                type="button"
+                x-show="showInstructions"
+                x-on:click="register"
+                class="..."
             >
                 Next
             </button>
-            
-            <button type="button"
-                    x-show="! showInstructions && showName"
-                    x-on:click="sendKey"
-                    x-bind:disabled="! keyName"
+
+            <button
+                type="button"
+                x-show="! showInstructions && showName"
+                x-on:click="sendKey"
+                x-bind:disabled="! keyName"
             >
                 Register key
             </button>
@@ -211,11 +211,11 @@ If you've been following the code above, you will need a `registerKey` method in
 public function registerKey($data): void
 {
     $this->resetErrorBag();
-    
+
     $this->validate([
         'newKeyName' => ['required', 'string', 'max:255'],
     ]);
-    
+
     try {
         app(\Rawilk\Webauthn\Actions\RegisterNewKeyAction::class)(
             auth()->user(),
@@ -224,10 +224,10 @@ public function registerKey($data): void
         );
     } catch (\Rawilk\Webauthn\Exceptions\WebauthnRegisterException $e) {
         $this->addError('newKeyName', $e->getMessage());
-        
+
         return;
     }
-    
+
     $this->publicKey = null;
     $this->showAddKey = false;
 }

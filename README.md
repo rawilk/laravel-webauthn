@@ -11,6 +11,7 @@
 Add the ability to add a hardware based two-factor authentication via a security key, fingerprint or biometric data. Using WebAuthn as a second factor of authentication can help your users better secure their accounts on your application. For more info on WebAuthn, please check out this [guide](https://webauthn.guide/).
 
 ## Documentation
+
 For more documentation, please visit the [docs](https://randallwilk.dev/docs/laravel-webauthn).
 
 ## Installation

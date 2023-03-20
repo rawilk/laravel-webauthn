@@ -11,9 +11,9 @@ The configuration provided out-of-the-box should be enough for most use cases, h
 
 The _Relying Party_ is just a way to uniquely identify your application in the user device:
 
-- `name`: The name of the application. Defaults to the application name.
-- `id`: Optional domain of the application. If null, the device will fill it internally.
-- `icon`: Optional image data in base64 (128 bytes maximum) or an image url.
+-   `name`: The name of the application. Defaults to the application name.
+-   `id`: Optional domain of the application. If null, the device will fill it internally.
+-   `icon`: Optional image data in base64 (128 bytes maximum) or an image url.
 
 > {tip} Consider using the base domain like `myapp.com` as the `id` to allow the credentials on subdomains like `acme.myapp.com`.
 
@@ -28,6 +28,7 @@ return [
 ```
 
 ## Key Attachment
+
 By default, the user decides what kind of key to use for registration. If you with to exclusively use a cross-platform authentication (like USB keys, CA Servers or Certificates), set this value to `cross-platform`. To exclusively use internal authenticators (like Touch ID or Windows Hello), set this value to `platform`. The default is a null value (for both).
 
 ```php
@@ -36,7 +37,7 @@ return [
 ];
 ```
 
-> {tip} If you want to separate cross-platform and platform keys in your UI, you can always set this config value at runtime. 
+> {tip} If you want to separate cross-platform and platform keys in your UI, you can always set this config value at runtime.
 
 If you decide to separate them out, you may also pass the attachment type to the `RegisterNewKeyAction` to instruct the action to tag a key with a specific platform. This will help you query for your keys by platform later.
 
