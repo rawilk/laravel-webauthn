@@ -21,7 +21,7 @@ You may publish the config file like this:
 php artisan vendor:publish --tag="webauthn-config"
 ```
 
-See the default configuration values [here](https://github.com/rawilk/laravel-webauthn/blob/main/config/webauthn.php).
+See the default configuration values [here](https://github.com/rawilk/laravel-webauthn/blob/{branch}/config/webauthn.php).
 
 ### Configuring the package
 

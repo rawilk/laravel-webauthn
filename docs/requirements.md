@@ -21,3 +21,4 @@ your application must meet these requirements:
 | Laravel | Minimum Version | Maximum Version |
 | ------- | --------------- | --------------- |
 | 9.12    | 1.0.0           |                 |
+| 10.x | 1.0.4 | |

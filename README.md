@@ -1,4 +1,4 @@
-# laravel-webauthn
+# WebAuthn for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/rawilk/laravel-webauthn.svg?style=flat-square)](https://packagist.org/packages/rawilk/laravel-webauthn)
 ![Tests](https://github.com/rawilk/laravel-webauthn/workflows/Tests/badge.svg?style=flat-square)
@@ -6,7 +6,7 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rawilk/laravel-webauthn?style=flat-square)](https://packagist.org/packages/rawilk/laravel-webauthn)
 [![License](https://img.shields.io/github/license/rawilk/laravel-webauthn?style=flat-square)](https://github.com/rawilk/laravel-webauthn/blob/main/LICENSE.md)
 
-![Social image](https://banners.beyondco.de/laravel-webauthn.png?theme=light&packageManager=composer+require&packageName=rawilk%2Flaravel-webauthn&pattern=randomShapes&style=style_1&description=Add+WebAuthn+functionality+to+Laravel.&md=1&showWatermark=0&fontSize=100px&images=key)
+![Social image](https://banners.beyondco.de/WebAuthn%20for%20Laravel.png?theme=light&packageManager=composer+require&packageName=rawilk%2Flaravel-webauthn&pattern=randomShapes&style=style_1&description=Add+WebAuthn+functionality+to+Laravel.&md=1&showWatermark=0&fontSize=100px&images=key)
 
 Add the ability to add a hardware based two-factor authentication via a security key, fingerprint or biometric data. Using WebAuthn as a second factor of authentication can help your users better secure their accounts on your application. For more info on WebAuthn, please check out this [guide](https://webauthn.guide/).
 
@@ -69,6 +69,10 @@ This package aims to provide only the bare necessities required to utilize WebAu
 
 -   [Laragear Webauthn](https://github.com/Laragear/WebAuthn)
 -   [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+
+## Disclaimer
+
+This package is not affiliated with, maintained, authorized, endorsed or sponsored by Laravel or any of its affiliates.
 
 ## License
 

@@ -16,3 +16,7 @@ Since the `v1.0.1` patch, a considerable amount of the JavaScript portion of thi
 
 -   [Larapass](https://github.com/DarkGhostHunter/Larapass)
 -   [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+
+## Disclaimer
+
+This package is not affiliated with, maintained, authorized, endorsed or sponsored by Laravel or any of its affiliates.
