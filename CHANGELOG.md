@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-webauthn` will be documented in this file
 
+## v1.0.6 - 2023-04-14
+
+### What's Changed
+
+- Bump aglipanci/laravel-pint-action from 2.1.0 to 2.2.0 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/15
+- Content Security Policy Support by @rawilk in https://github.com/rawilk/laravel-webauthn/pull/16
+
+**Full Changelog**: https://github.com/rawilk/laravel-webauthn/compare/v1.0.5...v1.0.6
+
 ## v1.0.5 - 2023-03-20
 
 ### What's Changed
