@@ -11,6 +11,7 @@ use Webauthn\TrustPath\EmptyTrustPath;
 uses(TestCase::class)->in(
     __DIR__ . '/Models',
     __DIR__ . '/Services',
+    __DIR__ . '/Unit',
 );
 
 // Helpers
