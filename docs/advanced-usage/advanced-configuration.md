@@ -11,9 +11,9 @@ The configuration provided out-of-the-box should be enough for most use cases, h
 
 The _Relying Party_ is just a way to uniquely identify your application in the user device:
 
--   `name`: The name of the application. Defaults to the application name.
--   `id`: Optional domain of the application. If null, the device will fill it internally.
--   `icon`: Optional image data in base64 (128 bytes maximum) or an image url.
+- `name`: The name of the application. Defaults to the application name.
+- `id`: Optional domain of the application. If null, the device will fill it internally.
+- `icon`: Optional image data in base64 (128 bytes maximum) or an image url.
 
 > {tip} Consider using the base domain like `myapp.com` as the `id` to allow the credentials on subdomains like `acme.myapp.com`.
 

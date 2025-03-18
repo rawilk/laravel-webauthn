@@ -27,8 +27,8 @@ See the default configuration values [here](https://github.com/rawilk/laravel-we
 
 No custom configuration is required out-of-the-box, however some common configurations you may want to change include:
 
--   `user_verification`: Basically determines if the user needs to enter a PIN for their security key. Set to `discouraged` to not require that.
--   `attachment_mode`: Determines which type of authenticator the user may use. Use `platform` for internal (biometric), and `cross-platform` for roaming (security) keys.
+- `user_verification`: Basically determines if the user needs to enter a PIN for their security key. Set to `discouraged` to not require that.
+- `attachment_mode`: Determines which type of authenticator the user may use. Use `platform` for internal (biometric), and `cross-platform` for roaming (security) keys.
 
 ## Migrations
 

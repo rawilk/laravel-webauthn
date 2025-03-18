@@ -14,8 +14,8 @@ Since the `v1.0.1` patch, a considerable amount of the JavaScript portion of thi
 
 ## Alternatives
 
--   [Larapass](https://github.com/DarkGhostHunter/Larapass)
--   [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
+- [Larapass](https://github.com/DarkGhostHunter/Larapass)
+- [asbiin/laravel-webauthn](https://github.com/asbiin/laravel-webauthn)
 
 ## Disclaimer
 
