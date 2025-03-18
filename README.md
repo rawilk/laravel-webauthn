@@ -1,3 +1,5 @@
+> Note: This package is not actively maintained currently, and I'm not sure if I'll end up archiving it or not yet. Use at your own risk.
+
 # WebAuthn for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/rawilk/laravel-webauthn.svg?style=flat-square)](https://packagist.org/packages/rawilk/laravel-webauthn)
