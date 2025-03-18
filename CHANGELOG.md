@@ -2,6 +2,26 @@
 
 All notable changes to `laravel-webauthn` will be documented in this file
 
+## v1.1.0 - 2025-03-18
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/17
+* Bump dependabot/fetch-metadata from 1.4.0 to 1.5.0 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/18
+* Bump aglipanci/laravel-pint-action from 2.2.0 to 2.3.0 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/19
+* Bump dependabot/fetch-metadata from 1.5.0 to 1.5.1 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/20
+* Bump dependabot/fetch-metadata from 1.5.1 to 1.6.0 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/21
+* Support Laravel 11 by @MiniCodeMonkey in https://github.com/rawilk/laravel-webauthn/pull/25
+* Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/22
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/rawilk/laravel-webauthn/pull/23
+* Laravel 12.x su pport
+
+### New Contributors
+
+* @MiniCodeMonkey made their first contribution in https://github.com/rawilk/laravel-webauthn/pull/25
+
+**Full Changelog**: https://github.com/rawilk/laravel-webauthn/compare/v1.0.6...v1.1.0
+
 ## v1.0.6 - 2023-04-14
 
 ### What's Changed
