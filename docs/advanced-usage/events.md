@@ -13,7 +13,7 @@ When a new `Webauthn` key is created for a user, we will dispatch this event. It
 
 Params:
 
--   `\Rawilk\Webauthn\Contracts\WebauthnKey $webauthnKey`
+- `\Rawilk\Webauthn\Contracts\WebauthnKey $webauthnKey`
 
 The following events are dispatched by this package:
 
@@ -23,7 +23,7 @@ We dispatch this when a WebauthnKey is used to verify a user's identity during t
 
 Params:
 
--   `\Rawilk\Webauthn\Contracts\WebauthnKey $webauthnKey`
+- `\Rawilk\Webauthn\Contracts\WebauthnKey $webauthnKey`
 
 ## WebauthnLoginDataGenerated
 
@@ -31,8 +31,8 @@ This is dispatched when we generate an assertion (public key) for a given user t
 
 Params:
 
--   `\Illuminate\Contracts\Auth\Authenticable $user`
--   `\Webauthn\PublicKeyCredentialRequestOptions $publicKey`
+- `\Illuminate\Contracts\Auth\Authenticable $user`
+- `\Webauthn\PublicKeyCredentialRequestOptions $publicKey`
 
 ## WebauthnRegisterData
 
@@ -40,8 +40,8 @@ This is dispatched when we generate an attestation (public key) for a given user
 
 Params:
 
--   `\Illuminate\Contracts\Auth\Authenticable $user`
--   `\Webauthn\PublicKeyCredentialCreationOptions $publicKey`
+- `\Illuminate\Contracts\Auth\Authenticable $user`
+- `\Webauthn\PublicKeyCredentialCreationOptions $publicKey`
 
 ## WebauthnRegistrationFailed
 
@@ -49,5 +49,5 @@ We dispatch this when a WebauthnKey fails to be generated for a given user.
 
 Params:
 
--   `\Illuminate\Contracts\Auth\Authenticable $user`
--   `\Exception $exception`
+- `\Illuminate\Contracts\Auth\Authenticable $user`
+- `\Exception $exception`
