@@ -24,7 +24,7 @@ class Webauthn extends WebauthnRepository
     /**
      * Get a publicKey data set to prepare WebAuthn key creation.
      *
-     * @param  null|string  $attachmentType For generating a different cache key name for multiple sections of keys in the UI
+     * @param  null|string  $attachmentType  For generating a different cache key name for multiple sections of keys in the UI
      */
     public function prepareAttestation(User $user, ?string $attachmentType = null): PublicKeyCredentialCreationOptions
     {

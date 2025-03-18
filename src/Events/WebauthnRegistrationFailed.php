@@ -11,10 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 class WebauthnRegistrationFailed
 {
-    use SerializesModels;
     use Dispatchable;
+    use SerializesModels;
 
-    public function __construct(public User $user, public Exception $exception)
-    {
-    }
+    public function __construct(public User $user, public Exception $exception) {}
 }

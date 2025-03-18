@@ -6,6 +6,4 @@ namespace Rawilk\Webauthn\Exceptions;
 
 use RuntimeException;
 
-class WrongUserHandleException extends RuntimeException
-{
-}
+class WrongUserHandleException extends RuntimeException {}

@@ -11,10 +11,8 @@ use Webauthn\PublicKeyCredentialRequestOptions;
 
 class WebauthnLoginDataGenerated
 {
-    use SerializesModels;
     use Dispatchable;
+    use SerializesModels;
 
-    public function __construct(public User $user, public PublicKeyCredentialRequestOptions $publicKey)
-    {
-    }
+    public function __construct(public User $user, public PublicKeyCredentialRequestOptions $publicKey) {}
 }

@@ -13,7 +13,5 @@ class WebauthnKeyWasUsed
     use Dispatchable;
     use SerializesModels;
 
-    public function __construct(public WebauthnKey $webauthnKey)
-    {
-    }
+    public function __construct(public WebauthnKey $webauthnKey) {}
 }

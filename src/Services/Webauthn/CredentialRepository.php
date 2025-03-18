@@ -17,9 +17,7 @@ use Webauthn\PublicKeyCredentialUserEntity;
 
 class CredentialRepository implements PublicKeyCredentialSourceRepository
 {
-    public function __construct(protected AuthFactory $auth)
-    {
-    }
+    public function __construct(protected AuthFactory $auth) {}
 
     public function findOneByCredentialId(string $publicKeyCredentialId): ?PublicKeyCredentialSource
     {

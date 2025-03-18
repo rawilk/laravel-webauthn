@@ -4,7 +4,6 @@ use Illuminate\Contracts\Cache\Factory as CacheFactoryContract;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
-use function Pest\Laravel\actingAs;
 use Psr\Http\Message\ServerRequestInterface;
 use Rawilk\Webauthn\Actions\PrepareAssertionData;
 use Rawilk\Webauthn\Exceptions\ResponseMismatchException;
@@ -16,6 +15,8 @@ use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialLoader;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
+
+use function Pest\Laravel\actingAs;
 
 uses(RefreshDatabase::class);
 
@@ -177,9 +178,7 @@ test('assertion fails if response is incorrect', function () {
     $credential->shouldReceive('getResponse')
         ->andReturn(new class extends \Webauthn\AuthenticatorResponse
         {
-            public function __construct()
-            {
-            }
+            public function __construct() {}
         });
 
     $this->mock(PublicKeyCredentialLoader::class)

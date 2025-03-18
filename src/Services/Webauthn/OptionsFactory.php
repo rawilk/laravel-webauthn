@@ -7,8 +7,9 @@ namespace Rawilk\Webauthn\Services\Webauthn;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Http\Request;
-use function random_bytes;
 use Webauthn\PublicKeyCredentialSourceRepository;
+
+use function random_bytes;
 
 abstract class OptionsFactory extends CredentialValidator
 {

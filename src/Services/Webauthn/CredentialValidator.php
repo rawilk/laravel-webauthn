@@ -20,8 +20,7 @@ abstract class CredentialValidator
     public function __construct(
         protected Request $request,
         protected Cache $cache,
-    ) {
-    }
+    ) {}
 
     protected function cacheKey(User $user, ?string $attachmentType = null): string
     {

@@ -62,7 +62,7 @@ it('creates a new WebauthnKey model', function () {
         [],
         'attestationType',
         new EmptyTrustPath,
-        new NilUlid(),
+        new NilUlid,
         'credentialPublicKey',
         $user->getAuthIdentifier(),
         0,
