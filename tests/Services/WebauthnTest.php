@@ -5,7 +5,7 @@ use Cose\Algorithm\ManagerFactory as CoseAlgorithmManagerFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Rawilk\Webauthn\Models\WebauthnKey;
 use Rawilk\Webauthn\Services\Webauthn;
-use Symfony\Component\Uid\NilUlid;
+use Symfony\Component\Uid\NilUuid;
 use Webauthn\AttestationStatement\AttestationObjectLoader;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
@@ -62,7 +62,7 @@ it('creates a new WebauthnKey model', function () {
         [],
         'attestationType',
         new EmptyTrustPath,
-        new NilUlid,
+        new NilUuid,
         'credentialPublicKey',
         $user->getAuthIdentifier(),
         0,
